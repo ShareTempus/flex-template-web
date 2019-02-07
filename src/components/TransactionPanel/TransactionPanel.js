@@ -180,10 +180,12 @@ export class TransactionPanelComponent extends Component {
 
     const listingLoaded = !!currentListing.id;
     const listingDeleted = listingLoaded && currentListing.attributes.deleted;
-    const customerLoaded = !!currentCustomer.id;
-    const isCustomerBanned = customerLoaded && currentCustomer.attributes.banned;
+    const iscustomerLoaded = !!currentCustomer.id;
+    const isCustomerBanned = iscustomerLoaded && currentCustomer.attributes.banned;
+    const isCustomerDeleted = iscustomerLoaded && currentCustomer.attributes.deleted;
     const isProviderLoaded = !!currentProvider.id;
     const isProviderBanned = isProviderLoaded && currentProvider.attributes.banned;
+    const isProviderDeleted = isProviderLoaded && currentProvider.attributes.deleted;
 
     const stateDataFn = tx => {
       if (txIsEnquired(tx)) {
@@ -275,6 +277,9 @@ export class TransactionPanelComponent extends Component {
       />
     );
 
+    const showSendMessageForm =
+      !isCustomerBanned && !isCustomerDeleted && !isProviderBanned && !isProviderDeleted;
+
     const sendMessagePlaceholder = intl.formatMessage(
       { id: 'TransactionPanel.sendMessagePlaceholder' },
       { name: otherUserDisplayName }
@@ -334,17 +339,19 @@ export class TransactionPanelComponent extends Component {
               onShowMoreMessages={() => onShowMoreMessages(currentTransaction.id)}
               totalMessagePages={totalMessagePages}
             />
+            {showSendMessageForm ? (
+              <SendMessageForm
+                form={this.sendMessageFormName}
+                rootClassName={css.sendMessageForm}
+                messagePlaceholder={sendMessagePlaceholder}
+                inProgress={sendMessageInProgress}
+                sendMessageError={sendMessageError}
+                onFocus={this.onSendMessageFormFocus}
+                onBlur={this.onSendMessageFormBlur}
+                onSubmit={this.onMessageSubmit}
+              />
+            ) : null}
 
-            <SendMessageForm
-              form={this.sendMessageFormName}
-              rootClassName={css.sendMessageForm}
-              messagePlaceholder={sendMessagePlaceholder}
-              inProgress={sendMessageInProgress}
-              sendMessageError={sendMessageError}
-              onFocus={this.onSendMessageFormFocus}
-              onBlur={this.onSendMessageFormBlur}
-              onSubmit={this.onMessageSubmit}
-            />
             {stateData.showSaleButtons ? (
               <div className={css.mobileActionButtons}>{saleButtons}</div>
             ) : null}
