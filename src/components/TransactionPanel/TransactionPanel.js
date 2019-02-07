@@ -11,10 +11,10 @@ import {
   txHasBeenDelivered,
 } from '../../util/transaction';
 import { LINE_ITEM_NIGHT, LINE_ITEM_DAY, propTypes } from '../../util/types';
-import { ensureListing, ensureTransaction, ensureUser, userDisplayName } from '../../util/data';
+import { ensureListing, ensureTransaction, ensureUser } from '../../util/data';
 import { isMobileSafari } from '../../util/userAgent';
 import { formatMoney } from '../../util/currency';
-import { AvatarLarge, BookingPanel, ReviewModal } from '../../components';
+import { AvatarLarge, BookingPanel, ReviewModal, UserDisplayName } from '../../components';
 import { SendMessageForm } from '../../forms';
 import config from '../../config';
 
@@ -37,9 +37,9 @@ import PanelHeading, {
 import css from './TransactionPanel.css';
 
 // Helper function to get display names for different roles
-const displayNames = (currentUser, currentProvider, currentCustomer, bannedUserDisplayName) => {
-  const authorDisplayName = userDisplayName(currentProvider, bannedUserDisplayName);
-  const customerDisplayName = userDisplayName(currentCustomer, bannedUserDisplayName);
+const displayNames = (currentUser, currentProvider, currentCustomer, intl) => {
+  const authorDisplayName = <UserDisplayName user={currentProvider} intl={intl} />;
+  const customerDisplayName = <UserDisplayName user={currentCustomer} intl={intl} />;
 
   let otherUserDisplayName = '';
   const currentUserIsCustomer =
@@ -227,9 +227,6 @@ export class TransactionPanelComponent extends Component {
     };
     const stateData = stateDataFn(currentTransaction);
 
-    const bannedUserDisplayName = intl.formatMessage({
-      id: 'TransactionPanel.bannedUserDisplayName',
-    });
     const deletedListingTitle = intl.formatMessage({
       id: 'TransactionPanel.deletedListingTitle',
     });
@@ -238,7 +235,7 @@ export class TransactionPanelComponent extends Component {
       currentUser,
       currentProvider,
       currentCustomer,
-      bannedUserDisplayName
+      intl
     );
 
     const { publicData, geolocation } = currentListing.attributes;
