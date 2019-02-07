@@ -31,3 +31,16 @@ export const WithBannedUser = {
     ],
   },
 };
+
+export const WithDeletedUser = {
+  component: Reviews,
+  props: {
+    reviews: [
+      createReview(
+        'review_1',
+        { rating: 1 },
+        { author: createUser('author_1', { banned: false, deleted: true, profile: null }) }
+      ),
+    ],
+  },
+};
