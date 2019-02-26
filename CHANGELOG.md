@@ -14,8 +14,46 @@ way to update this template, but currently, we follow a pattern:
 
 ## Upcoming version 2019-XX-XX
 
+- [change] Improve German translations.
+  [#1034](https://github.com/sharetribe/flex-template-web/pull/1034)
+- [change] Reordered import/exports on src/components/index.js. This helps to mitigate possible
+  circular dependency problems and strange bugs in CSS bundle. In addition, derivative buttons were
+  refactored to work with `rootClassName` prop (PrimaryButton, SecondaryButton and
+  InlineTextButton). [#1024](https://github.com/sharetribe/flex-template-web/pull/1024)
+
+## [v2.11.1] 2019-02-21
+
+- [add] New translations for French and Spanish (fr.json & es.json)
+  [#1028](https://github.com/sharetribe/flex-template-web/pull/1028)
+- [add] New translation file German (de.json). This also adds hyphenation to some of the titles.
+  [#1027](https://github.com/sharetribe/flex-template-web/pull/1027)
+
+  [v2.11.0]: https://github.com/sharetribe/flex-template-web/compare/v2.11.0...v2.11.1
+
+## [v2.11.0] 2019-02-20
+
+- [fix] SelectMultipleFilter had a bug on mobile layout - `onSubmit` didn't get called. This fixes
+  also two other issues with SelectMultipleFilter: hovering on ListingCard removed dirty values on
+  repaint and there was an outline flashing on FilterForm when clicking checkboxes.
+  [#1025](https://github.com/sharetribe/flex-template-web/pull/1025)
+- [fix] Small changes in CSS files in order to match content width with the footer in pages where
+  the footer is visible. Also, make side layout (used e.g. in `TermsOfServicePage`, `InboxPage`,
+  `ContactDetailsPage`) align width footer better. Check responsive layouts carefulle after taking
+  update from upstream. [#1090](https://github.com/sharetribe/flex-template-web/pull/1019)
+- [add] This adds an example how user-generated content could be sanitized. If you have extended
+  data you should consider if sanitization is needed for that.
+  [#1023](https://github.com/sharetribe/flex-template-web/pull/1023)
+- [change] A new component `UserDisplayName` is added for showing user display name and also
+  handling the cases where a user is banned or deleted. When the user name must be a string instead
+  of a component (e.g. in `Avatar` and in `ListingPage`) you can use a new function
+  `userDisplayNameAsString`. Together these will replace the old `userDisplayName` function which is
+  now deprecated. Also some small bug fixes to showing banned user. There is quite a lot of file
+  changes caused by updating test files.
+  [#1022](https://github.com/sharetribe/flex-template-web/pull/1022)
 - [change] Remove error handling for unverified email from PasswordRecoveryPage and translations
   related to that. [#1021](https://github.com/sharetribe/flex-template-web/pull/1021)
+
+  [v2.11.0]: https://github.com/sharetribe/flex-template-web/compare/v2.10.0...v2.11.0
 
 ## [v2.10.0] 2019-01-31
 
